@@ -1,25 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+import Login from "./components/Login";
+import Header from "./components/Header";
+import NotesList from "./components/NotesList";
+import NoteEditor from "./components/NoteEditor";
+
+import "./App.css";
+import { useState } from "react";
+
+// www.notes.com/
+// www.notes.com/edit
+// www.notes.com/edit/asdlfkjadsasdfasf
+
+// will have to render login page or notes list based on if user is logged in or not
+// example: if !loggedIn ? Login : NotesList
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  const [loggedIn, setIsLoggedIn] = useState(true);
+
+  return loggedIn ? (
+    <Router>
+      <div className="appWrapper">
+        <div className="app">
+          <Header />
+
+          <Routes>
+            <Route exact path="/notes" element={<NotesList />} />
+            <Route exact path="edit/" element={<NoteEditor />} />
+            <Route exact path="edit/:noteId" element={<NoteEditor />} />
+          </Routes>
+        </div>
+      </div>
+    </Router>
+  ) : (
+    <Router>
+      {" "}
+      <div className="appWrapper">
+        <div className="app">
+          <Header />
+
+          <Routes>
+            <Route exact path="/" element={<Login />} />
+          </Routes>
+        </div>
+      </div>
+    </Router>
   );
 }
 
