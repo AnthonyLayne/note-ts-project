@@ -25,5 +25,5 @@
     "typeRoots": [".@types"],
     "jsx": "react-jsx"
   },
-  "include": ["**/*.ts", "**/*.tsx", "backend/data/db-config.ts"]
+  "include": ["**/*.ts", "**/*.tsx", "backendOld/data/db-config.ts"]
 }
