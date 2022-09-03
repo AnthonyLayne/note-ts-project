@@ -1,0 +1,28 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "@typescript-eslint/no-unsafe-member-access": 0,
+    "max-len": [
+      "error",
+      {
+        "code": 100
+      }
+    ],
+    "no-console": 1,
+    "no-extra-boolean-cast": 0,
+    "semi": 1,
+    "@typescript-eslint/no-misused-promises": 0
+  },
+  "ignorePatterns": ["spec/tests/*.ts"]
+}
