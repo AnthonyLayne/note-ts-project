@@ -1,22 +1,21 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { Provider } from "react-redux";
-import { createStore } from "redux";
 
-import rootReducer from "./redux/reducers";
+// Context
+import { NotesContextProviderComponent } from "./context/notesContext";
 
-import App from "./App";
+// Components
+import App from "src/App";
 
 import "./index.css";
 
 const container = document.getElementById("root") as HTMLElement;
 const root = createRoot(container);
-const store = createStore(rootReducer);
 
 root.render(
-  <Provider store={store}>
-    <StrictMode>
+  <StrictMode>
+    <NotesContextProviderComponent>
       <App />
-    </StrictMode>
-  </Provider>
+    </NotesContextProviderComponent>
+  </StrictMode>
 );
