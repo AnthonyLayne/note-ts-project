@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 //import Login from "./components/Login";
 import Header from "./components/Header";
-import NotesList from "./components/NotesList";
+//import NotesList from "./components/NotesList";
 import NoteEditor from "./components/NoteEditor";
 
 import "./App.css";
@@ -25,7 +25,7 @@ function App() {
           <Header />
 
           <Routes>
-            <Route path="/notes" element={<NotesList />} />
+            {/* <Route path="/notes" element={<NotesList />} /> */}
             <Route path="edit/" element={<NoteEditor />} />
             <Route path="edit/:noteId" element={<NoteEditor />} />
           </Routes>
