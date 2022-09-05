@@ -2,7 +2,7 @@ import { Request, Response, Router, NextFunction, ErrorRequestHandler } from "ex
 import StatusCodes from "http-status-codes";
 
 // const USER = require("./users-model");
-import userService from "@services/user-service";
+import userService from "@services/userService";
 
 // **** Variables **** //
 
@@ -14,6 +14,8 @@ const { CREATED, OK } = StatusCodes;
 export const USER_ROUTES = {
   GET_ALL: "/",
   GET_ONE: "/:user_id",
+  POST: "/",
+  DELETE: "/:user_id",
 } as const;
 
 // **** Routes **** //
@@ -22,7 +24,6 @@ export const USER_ROUTES = {
  * Get all users
  */
 router.get(USER_ROUTES.GET_ALL, (req: Request, res: Response, next: NextFunction) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   userService
     .getAllUsers()
     .then((users: Array<object>) => {
@@ -32,36 +33,40 @@ router.get(USER_ROUTES.GET_ALL, (req: Request, res: Response, next: NextFunction
     .catch(next);
 });
 
-// router.get(USER_ROUTES.GET_ONE, (req: Request, res: Response, next: NextFunction) => {
-//   USER.getUserById(req.params.user_id)
-//     .then((user: object) => {
-//       if (!user) return res.status(404);
-//       return res.status(200).json(user);
-//     })
-//     .catch(next);
-// });
+router.get(
+  USER_ROUTES.GET_ONE,
+  (req: Request<{ user_id: number }>, res: Response, next: NextFunction) => {
+    userService
+      .getUserById(req.params.user_id)
+      .then((user) => {
+        if (!user) return res.status(404);
+        return res.status(200).json(user);
+      })
+      .catch(next);
+  }
+);
 
-// router.post("/", async (req: Request, res: Response, next: NextFunction) => {
-//   try {
-//     const newUser = await USER.addUser({
-//       user_username: req.body.user_username,
-//       user_password: req.body.user_password,
-//     });
+router.post(USER_ROUTES.POST, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { user_username, user_password } = req.body;
+    const newUser = await userService.addUser(user_username, user_password);
+    console.log("after addUser Await", newUser);
+    res.status(201).json(newUser);
+  } catch (err) {
+    next(err);
+  }
+});
 
-//     res.status(201).json(newUser);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
-// router.delete("/:user_id", async (req: Request, res: Response, next: NextFunction) => {
-//   try {
-//     await USER.deleteUserById(req.params.user_id);
-//     //res.json(req.user);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
+router.delete(
+  USER_ROUTES.DELETE,
+  async (req: Request<{ user_id: number }>, res: Response, next: NextFunction) => {
+    try {
+      await userService.deleteUserById(req.params.user_id);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 // // router.use("*", (req, res) => {
 // //   res.json({ api: "up" });
