@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 
 import "./index.css";
 
-function NotesList({ notes }) {
+//{ notes }
+function NotesList() {
   return (
     <div className="notesListWrapper">
       <h2 className="header">Your Notes:</h2>

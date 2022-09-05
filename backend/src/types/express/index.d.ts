@@ -4,7 +4,9 @@ import express from "express";
 declare module "express" {
   export interface Request {
     body: {
-      id?: string;
+      user_id?: string;
+      user_password: string;
+      user_username: string;
     };
   }
 }
