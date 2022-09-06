@@ -30,6 +30,7 @@ if (envVars.nodeEnv === "development") {
 
 // Security (helmet recommended in express docs)
 if (envVars.nodeEnv === "production") {
+  console.log("Eric verifying production console log");
   app.use(helmet());
 }
 
